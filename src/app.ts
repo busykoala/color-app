@@ -4,15 +4,20 @@ import axios from 'axios';
 const app = express();
 const port = 3000;
 
-const otherServices = process.env.OTHER_SVCS.split(',');
+const otherServices = process.env.OTHER_SVCS?.split(',') || [];
 
 const getRandomService = () => {
+  if (otherServices.length === 0) return '';
   const randomIndex = Math.floor(Math.random() * otherServices.length);
   return otherServices[randomIndex];
 };
 
 const curlRandomService = () => {
   const randomService = getRandomService();
+  if (!randomService) {
+    console.log('No other services available.');
+    return;
+  }
   axios.get(`http://${randomService}`)
     .then(response => {
       console.log(`Curling service ${randomService}: ${response.data}`);
