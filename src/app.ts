@@ -34,6 +34,10 @@ const curlRandomService = () => {
     });
 };
 
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
 // Initial delay before starting the first curl operation
 setTimeout(curlRandomService, 5000);
 
